@@ -8,7 +8,13 @@ editor: source
 
 **Part 1:** Locate and examine the `robots.txt` file for this website. Summarize what you learn from it.
 
-**Part 2:** Learn about the `html_attr()` function from `rvest`. Describe how this function works with a small example.
+The robots.txt file for the cheese.com website showed us that any user is authorized to scrape the
+data from this site. The other other piece of information provided was the sitemap at
+<https://www.cheese.com/sitemap.xml>. Basically, there are no restrictions for webscraping on this
+cheese website.
+
+**Part 2:** Learn about the `html_attr()` function from `rvest`. Describe how
+this function works with a small example.
 
 The html_attr() function gets the destination of the links/images on a page.
 
