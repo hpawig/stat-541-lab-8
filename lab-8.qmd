@@ -138,6 +138,63 @@ for (page in pages) {
 
 (Just 10 to avoid overtaxing the website! Continue adding a 1 second pause between page queries.)
 
+```{r}
+# Helper function to extract certain attributes
+get_text_from_page <- function(page, css_selector) {
+    
+  page %>%
+    html_elements(css_selector) %>%
+    html_text()
+}
+
+
+# page is a URL
+# This function will scrape 1 page and puts the cheese info into a tibble
+scrape_page <- function(cheese_url) {
+    
+    Sys.sleep(1)
+    
+    # Read the page
+    page <- read_html(cheese_url)
+    
+    # Grab elements from the page
+    milk_info <- get_text_from_page(page, ".summary_milk p")
+    country_of_origin <- get_text_from_page(page, ".summary_country p")
+    family <- get_text_from_page(page, ".summary_family p")
+    type <- get_text_from_page(page, ".summary_moisture_and_type p")
+    flavour <- get_text_from_page(page, ".summary_taste p")
+
+    
+    # Put page elements into a dataframe
+    tibble(
+        milk = milk_info,
+        country_of_origin,
+        family, type, flavour
+    )
+}
+
+
+# Create a character vector of URLs for the first 5 pages
+# scrapes multiple cheese pages with map()
+# Cheese vector containing cheeses with a family section
+cheese_urls <- result |> 
+  filter(Name %in% c(
+    "Amul Processed Cheese", "Cheese Curds", "Colby", "Applewood",
+    "Vacherin", "Mozzarella di Bufala DOP", "Pecorino Romano",
+    "Paesanella Burrata", "Camembert", "Paesanella Cherry Bocconcini"
+  )) |> 
+  pull(url) 
+
+cheeses_details <- purrr::map(cheese_urls, scrape_page)
+
+# Combine the list of dataframes into one dataframe
+df_cheeses <- bind_rows(cheeses_details)
+
+head(df_cheeses)
+
+```
+
+
 **Part 6:** Evaluate the code that you wrote in terms of **efficiency**. To what extent do your function(s) adhere to the **principles for writing good functions**? To what extent are your **functions efficient**? To what extent is your **iteration of these functions efficient**?
 
 There is a little bit of duplication happening when we want specific sections of a webpage so it makes sense to make a separate function to do that for us. The body is also easy to read and there are comments associated with the functions. It is hard to make the functions more efficient than they are right now since it isn't really possible to vectorize the code. There isn't a way to grab multiple sites at once since we are limited by the fact that we can only grab so many pages at once. There is also a significant portion of time just receiving data from the website, so that also adds more time.
