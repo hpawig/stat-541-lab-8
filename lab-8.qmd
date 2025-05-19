@@ -74,8 +74,8 @@ Observations:
   - None of the code worked. The `cheese_data` and `cheese_names` objects are empty.
   - The code was not useful at all. I had to figure out the correct CSS selectors using the selector gadget tool
   in order to get the cheese names and URLs.
-    - The correct CSS selector for the each cheese's URL is "a".
-    - The correct CSS selector for the cheese names is "h3".
+    - The correct CSS selector for the each cheese's URL is "h3 a".
+    - The correct CSS selector for the cheese names text is "h3".
   
 
 **Part 4:** Obtain the following information for **all** cheeses in the database:
