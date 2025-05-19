@@ -17,10 +17,10 @@ The html_attr() function gets the destination of the links/images on a page.
 ```{r}
 ## The code from below will get all the destinations
 ## of the links on the page
-
-# read_html("https://www.cheese.com/alphabetical") |> 
-#   html_elements("a") |> 
-#   html_attr("href") |> 
+#
+# read_html("https://www.cheese.com/alphabetical") |>
+#   html_elements("a") |>
+#   html_attr("href") |>
 #   head(5)
 ```
 
@@ -42,20 +42,23 @@ library(dplyr)
 url <- "https://www.cheese.com/alphabetical"
 
 # Read the HTML content from the webpage
-webpage <- read_html(url)
+webpage <- read_html(url) ## Comment: also just use read_html("https://www.cheese.com/alphabetical/")
 
 # Extract the cheese names and URLs
+## Comment: this code chunk results in an empty character 
 cheese_data <- webpage %>%
   html_nodes(".cheese-item") %>%
   html_nodes("a") %>%
   html_attr("href") %>%
   paste0("https://cheese.com", .)
 
+## Comment: this code chunk ALSO results in an empty character 
 cheese_names <- webpage %>%
   html_nodes(".cheese-item h3") %>%
   html_text()
 
 # Create a data frame to store the results
+## Comment: this dataframe is empty.... because the other objects are
 cheese_df <- data.frame(Name = cheese_names,
                         URL = cheese_data,
                         stringsAsFactors = FALSE)
@@ -63,6 +66,13 @@ cheese_df <- data.frame(Name = cheese_names,
 # Print the data frame
 print(cheese_df)
 ```
+Observations:
+  - None of the code worked. The `cheese_data` and `cheese_names` objects are empty.
+  - The code was not useful at all. I had to figure out the correct CSS selectors using the selector gadget tool
+  in order to get the cheese names and URLs.
+    - The correct CSS selector for the each cheese's URL is "h3 a".
+    - The correct CSS selector for the cheese names text is "h3".
+  
 
 **Part 4:** Obtain the following information for **all** cheeses in the database:
 
