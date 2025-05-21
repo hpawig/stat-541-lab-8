@@ -1,7 +1,15 @@
 ---
-title: "Lab 8"
+title: "Lab 8: Web Scraping"
 subtitle: "Cheese Gromit!"
 editor: source
+author: "Allen Choi and Hannah Pawig"
+format:
+  html:
+    code-fold: show
+    code-summary: "Click to hide/show the code"
+    code-overflow: wrap
+    toc: true
+embed-resources: true
 ---
 
 > **Goal:** Scrape information from <https://www.cheese.com> to obtain a dataset of characteristics about different cheeses, and gain deeper insight into your coding process. 🪤
@@ -31,12 +39,16 @@ The html_attr() function gets the destination of the links/images on a page but 
 Fully document your process of checking this code. Record any observations you make about where ChatGPT is useful / not useful.
 
 ```{r}
-#| eval: false
-#| label: small-example-of-getting-cheese-info
-
-# Load required libraries
+#| warning: false
+#| message: false
+#| label: load-libraries
 library(rvest)
 library(dplyr)
+```
+
+```{r}
+#| eval: false
+#| label: small-example-of-getting-cheese-info
 
 # Define the URL
 url <- "https://www.cheese.com/alphabetical"
@@ -193,7 +205,6 @@ df_cheeses <- bind_rows(cheeses_details)
 head(df_cheeses)
 
 ```
-
 
 **Part 6:** Evaluate the code that you wrote in terms of **efficiency**. To what extent do your function(s) adhere to the **principles for writing good functions**? To what extent are your **functions efficient**? To what extent is your **iteration of these functions efficient**?
 
